@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Faculty</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0b7dda;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #2196F3;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Add New Faculty</h2>
+
+<form method="POST">
+    Faculty ID: <input type="text" name="faculty_id" placeholder="F01" required><br>
+    Name: <input type="text" name="name" placeholder="Enter Faculty Name" required><br>
+    Email: <input type="email" name="email" placeholder="example@mail.com"><br>
+    Mobile: <input type="text" name="mobile" placeholder="9876543210"><br>
+    Subject: <input type="text" name="subject" placeholder="Data Structure / COA"><br>
+    Designation: <input type="text" name="designation" placeholder="Professor / Assistant Professor"><br>
+    <button type="submit">Add Faculty</button>
+</form>
+
+<!-- Back Button Below -->
+<a href="/view_faculty">🏠 Back to Faculty List</a>
+
+</body>
+</html>

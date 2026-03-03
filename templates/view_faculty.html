@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Faculty</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed; /* Keeps column widths fixed */
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: left;
+            word-wrap: break-word; /* Prevent text overflow */
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 5px; /* Space between buttons */
+            flex-wrap: wrap; /* Wrap if too small */
+        }
+        a {
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+            flex: 1; /* Equal width if possible */
+        }
+        .edit { background-color: #4CAF50; }
+        .delete { background-color: #f44336; }
+        .add { background-color: #2196F3; }
+        .dashboard { background-color: #555; }
+        .center { text-align: center; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<h2>Faculty List</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Subject</th>
+        <th>Designation</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for f in faculty %}
+    <tr>
+        <td>{{ f[0] }}</td>
+        <td>{{ f[1] }}</td>
+        <td>{{ f[2] }}</td>
+        <td>{{ f[5] }}</td> <!-- Mobile -->
+        <td>{{ f[3] }}</td>
+        <td>{{ f[4] }}</td>
+        <td>
+            <div class="action-buttons">
+                <a href="/edit_faculty/{{ f[0] }}" class="edit">Edit</a>
+                <a href="/delete_faculty/{{ f[0] }}" class="delete" onclick="return confirm('Are you sure you want to delete this faculty?')">Delete</a>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="center">
+    <a href="/add_faculty" class="add">➕ Add New Faculty</a>
+    <a href="/dashboard" class="dashboard">🏠 Back to Dashboard</a>
+</div>
+
+</body>
+</html>

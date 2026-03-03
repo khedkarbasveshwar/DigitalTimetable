@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Timetable</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 1000px; 
+            margin:auto; 
+            background-color: #f7f7f7; 
+        }
+        h2 { 
+            text-align: center; 
+            margin-bottom: 20px; 
+        }
+        form { 
+            background-color: #fff; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+            margin-bottom: 20px; 
+            text-align:center;
+        }
+        select, button { 
+            width: 30%; 
+            padding: 10px; 
+            margin-right: 1%; 
+            margin-bottom: 10px;
+            font-size: 16px; 
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button { 
+            background-color: #2196F3; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+        }
+        button:hover { 
+            background-color: #0b7dda; 
+        }
+        table { 
+            border-collapse: collapse; 
+            width: 100%; 
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        th, td { 
+            border: 1px solid #333; 
+            padding: 10px; 
+            text-align: center; 
+        }
+        th { 
+            background-color: #f2f2f2; 
+        }
+        a { 
+            display: inline-block; 
+            margin-top: 15px; 
+            color: #2196F3; 
+            text-decoration: none; 
+            font-weight: bold;
+        }
+        a:hover { 
+            text-decoration: underline; 
+        }
+        /* Responsive table scroll */
+        @media screen and (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            th, td { text-align: right; padding-left: 50%; position: relative; }
+            th::before, td::before {
+                position: absolute;
+                left: 10px;
+                width: 45%;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+            tr { margin-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<h2>Generate Timetable</h2>
+
+<!-- Filter Form -->
+<form method="POST">
+    <select name="year">
+        <option value="">--Select Year--</option>
+        {% for y in years %}
+        <option value="{{ y }}" {% if request.form.year == y %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+    </select>
+
+    <select name="faculty">
+        <option value="">--Select Teacher--</option>
+        {% for f in faculty_list %}
+        <option value="{{ f[0] }}" {% if request.form.faculty == f[0] %}selected{% endif %}>{{ f[1] }}</option>
+        {% endfor %}
+    </select>
+
+    <select name="room">
+        <option value="">--Select Lab/Library--</option>
+        {% for r in rooms %}
+        <option value="{{ r }}" {% if request.form.room == r %}selected{% endif %}>{{ r }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Generate</button>
+</form>
+
+<!-- Timetable Table -->
+{% if timetable %}
+<table>
+    <tr>
+        <th>Day</th>
+        <th>Faculty</th>
+        <th>Subject</th>
+        <th>Room</th>
+        <th>Time Slot</th>
+    </tr>
+    {% for row in timetable %}
+    <tr>
+        <td>{{ row[0] }}</td>
+        <td>
+            {% for f in faculty_list %}
+                {% if f[0] == row[2] %}
+                    {{ f[1] }}
+                {% endif %}
+            {% endfor %}
+        </td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[3] }}</td>
+        <td>{{ row[4] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+{% if request.method == 'POST' %}
+<p style="text-align:center; margin-top:20px; font-weight:bold; color:red;">
+    ❌ No timetable data found for selected filters.
+</p>
+{% endif %}
+{% endif %}
+
+<!-- Back Button -->
+<div style="text-align:center;">
+    <a href="/dashboard">🏠 Back to Dashboard</a>
+</div>
+
+</body>
+</html>
